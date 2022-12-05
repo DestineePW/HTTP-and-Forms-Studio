@@ -1,19 +1,77 @@
-<!doctype html>
+<!DOCTYPE html>
 
 <head>
-	<meta charset="utf-8">
-	<script>
-		// TODO: create a handler
-    window.addEventListener("load", function(){
-        // TODO: register the handler
+  <meta charset="utf-8" />
+
+  <link href="./style.css" type="text/css" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css?family=Pacifico&display=swap"
+    rel="stylesheet"
+  />
+
+  <script>
+    // TODO: create a handler
+
+    function setSearchEngine() {
+      let actions = {
+        google: "https://www.google.com/search",
+        duckDuckGo: "https://duckduckgo.com/",
+        bing: "https://www.bing.com/search",
+        ask: "https://www.ask.com/web",
+      };
+
+      let form = document.querySelector("form");
+      let buttonSelected = document.querySelector(
+        "input[name = engines]:checked"
+      );
+
+      let query = document.getElementById("q");
+
+      let errorBox = document.getElementById("errorBox");
+      let errorMsg = document.getElementById("errorMsg");
+
+      if (!buttonSelected) {
+        errorBox.style.visibility = "visible";
+        errorMsg.style.visibility = "visible";
+        errorMsg.innerHTML = "oops! Which seach engine do you want to use?";
+        event.preventDefault();
+      } else if (query.value === "") {
+        errorBox.style.visibility = "visible";
+        errorMsg.style.visibility = "visible";
+        errorMsg.innerHTML = "oops! You didn't enter anything to seach for.";
+        event.preventDefault();
+      } else {
+				errorBox.style.visibility = "hidden";
+				errorMsg.style.visibility = "hidden";
+			}
+
+      let url = actions[buttonSelected.value];
+      form.action = url;
+    }
+
+    window.addEventListener("load", function () {
+      const form = document.querySelector("form");
+      form.addEventListener("submit", setSearchEngine);
     });
-	</script>
+  </script>
 </head>
 
-<body>
+<div class="searchBar">
+  <p class="searchHeader">Search anywhere!</p>
+  <body>
+    <form id="searchForm" target="_blank">
+      <input type="text" class="q" id="q" name="q" /><br />
+      <label
+        ><input type="radio" name="engines" value="google" /> Google
+      </label>
+      <label
+        ><input type="radio" name="engines" value="duckDuckGo" /> duckDuckGo
+      </label>
+      <label><input type="radio" name="engines" value="bing" /> Bing </label>
+      <label><input type="radio" name="engines" value="ask" /> Ask </label>
+      <button id="submit" value="go">Go!</button>
+    </form>
 
-	<form id="searchForm">
-    <!-- TODO: add form elements -->
-	</form>
 
-</body>
+  </body>
+</div>
